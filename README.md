@@ -20,15 +20,3 @@ The MultimodalSyntheticDataset class is a custom dataset designed for generating
    *Structured Data*: Generated within specific ranges for each feature and label. The features are divided into two groups: the first half has values within class-specific ranges, aims to create random values within established patterns by class and feature, as simulating laboratory test indicators, while the second half has values within a broader range, creating noisy features.
 
    *Image Data*: Synthetic images are generated with simple patterns and colors based on the label. Each image contains a circle whose size and color are determined by the label.
-
-Methods:
-
-__init__: Initializes the dataset, generates structured data, and calls the method to generate images.
-
-_generate_images: Creates synthetic images with patterns based on the labels.
-
-__len__: Returns the total number of samples.
-
-__getitem__: Retrieves a sample from the dataset, including structured data, image data, and the label.
-
-This class is ideal for testing and developing machine learning models that require both structured and image data inputs.
