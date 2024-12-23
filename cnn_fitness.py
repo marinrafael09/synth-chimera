@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 from cnn_model import MultimodalCNN
 
-def evaluate_features(X_num, X_img, y, device, num_epochs=100, lr=0.001):
+def evaluate_features(X_num, X_img, y, device, num_epochs=5, lr=0.001):
     """
     Evaluate feature selection using MultimodalCNN as the fitness function.
 
@@ -18,6 +18,8 @@ def evaluate_features(X_num, X_img, y, device, num_epochs=100, lr=0.001):
     Returns:
         float: Final model accuracy on the dataset.
     """
+
+    
     num_struct_features = X_num.shape[1]
     image_input_shape = X_img.shape[1:]  # C, H, W
     num_classes = len(torch.unique(y))

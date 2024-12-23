@@ -8,7 +8,7 @@ from torchvision.transforms import ToTensor
 from torch.utils.data import DataLoader
 from dataset import MultimodalSyntheticDataset 
 
-def generate_multimodal_dataset(num_samples=1000, num_features=10, image_size=(64, 64), num_classes=2):
+def generate_multimodal_dataset(num_samples=500, num_features=10, image_size=(64, 64), num_classes=2):
     """
     Generate a multimodal dataset using the MultimodalSyntheticDataset class.
 

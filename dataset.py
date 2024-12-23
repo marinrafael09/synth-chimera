@@ -9,7 +9,7 @@ from device_detection import get_available_device
 device = get_available_device()
 
 class MultimodalSyntheticDataset(Dataset):
-    def __init__(self, num_samples=1000, num_features=10, image_size=(64, 64), num_classes=2):
+    def __init__(self, num_samples=500, num_features=10, image_size=(64, 64), num_classes=2):
         super().__init__()
         self.num_samples = num_samples
         self.num_features = num_features
@@ -38,7 +38,7 @@ class MultimodalSyntheticDataset(Dataset):
         for _class in range(num_classes):       
             print(f'Generating features for label {_class}')
             ranges_classes = [((_class * num_features + feature), (_class * num_features + feature)+0.95) for feature in range(num_features//2)]             
-
+            print(f"Ranges {ranges_classes} ")
             for i in range(samples_per_class):
                 sample_index = _class * samples_per_class + i
                 self.labels[sample_index] = _class
@@ -48,7 +48,7 @@ class MultimodalSyntheticDataset(Dataset):
                         range_start, range_finish = ranges_classes[feat]
                         self.structured_data[sample_index, feat] = round(np.random.uniform(range_start, range_finish), 2)
                     else:
-                        self.structured_data[sample_index, feat] = round(np.random.uniform(100, 10000),2)
+                        self.structured_data[sample_index, feat] = round(np.random.uniform(100, 100000),2)
 
             # Generate synthetic image data
             self.image_data = self._generate_images()
