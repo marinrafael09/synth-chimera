@@ -21,17 +21,25 @@ def genetic_algorithm(X_num, X_img, y, fitness_fn, num_generations=50, populatio
     Returns:
         np.ndarray: Binary mask of selected features.
     """
-    num_features = X_num.shape[1]
+    #All features plus image
+    num_features = X_num.shape[1]+1
+    
 
     # Initialize population with random binary masks
     population = np.random.randint(0, 2, (population_size, num_features))
+    test = torch.tensor(population)
+    while torch.all(test == 0): # Recreate if all population are zero
+        print("Recreating population")
+        population = np.random.randint(0, 2, (population_size, num_features))
+        
 
     for generation in range(num_generations):
         # Evaluate fitness of each individual
         fitness_scores = []
         for individual in population:
-            selected_features = individual.astype(bool)
-            fitness = fitness_fn(X_num[:, selected_features], X_img, y)
+            selected_features = individual[:-1].astype(bool) # Selecting all except the last column
+            selected_images = individual[-1].astype(bool) # Selecting just the last column
+            fitness = fitness_fn(X_num[:, selected_features], X_img, y, selected_images)
             fitness_scores.append(fitness)
 
         fitness_scores = np.array(fitness_scores)
@@ -62,8 +70,6 @@ def genetic_algorithm(X_num, X_img, y, fitness_fn, num_generations=50, populatio
     return best_individual
 
 
-import numpy as np
-
 def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=30, num_iterations=50, w=0.5, c1=2, c2=2, device="cpu"):
     """
     Particle Swarm Optimization for feature selection on multimodal data.
@@ -83,23 +89,30 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=30, n
     Returns:
         np.ndarray: Binary mask of selected features.
     """
-    num_features = X_num.shape[1]
+    #Adding image feature
+    num_features = X_num.shape[1]+1
 
     # Initialize particles randomly
     particles = np.random.rand(num_particles, num_features) > 0.5
+    test = torch.tensor(particles)
+    while torch.all(test == 0): # Recreate if all particles are zero
+        print("Recreating particles")
+        particles = np.random.rand(num_particles, num_features) > 0.5
+
     velocities = np.random.rand(num_particles, num_features) * 0.1
 
     # Initialize personal and global bests
     personal_best_positions = particles.copy()
-    personal_best_scores = np.array([fitness_fn(X_num[:, p.astype(bool)], X_img, y) for p in particles])
+    personal_best_scores = np.array([fitness_fn(X_num[:, p[:-1].astype(bool)], X_img, y, p[-1].astype(bool)) for p in particles])
     global_best_position = personal_best_positions[np.argmax(personal_best_scores)]
     global_best_score = personal_best_scores.max()
 
     for iteration in range(num_iterations):
         for i, particle in enumerate(particles):
             # Evaluate fitness
-            selected_features = particle.astype(bool)
-            fitness = fitness_fn(X_num[:, selected_features], X_img, y)
+            selected_features = particle[:-1].astype(bool)
+            selected_images = particle[-1].astype(bool)
+            fitness = fitness_fn(X_num[:, selected_features], X_img, y, selected_images)
 
             # Update personal best
             if fitness > personal_best_scores[i]:
