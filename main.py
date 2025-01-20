@@ -13,7 +13,7 @@ def main():
     
     # Generate dataset
     print('Generating multimodal dataset')
-    X_num, X_img, y = generate_multimodal_dataset(num_samples=10, num_features=4, image_size=(64,64), num_classes=2)
+    X_num, X_img, y = generate_multimodal_dataset(num_samples=1000, num_features=10, image_size=(64,64), num_classes=2)
     X_num, X_img, y = X_num.to(device), X_img.to(device), y.to(device)
 
     now = datetime.datetime.now()
@@ -50,14 +50,14 @@ def main():
     # GA Feature Selection
     print("\n Evaluating GA-selected features...")
     start_time = time.time()
-    ga_selected_features = genetic_algorithm(X_num, X_img, y, fitness_fn, device=device, num_generations=5, population_size=5)
+    ga_selected_features = genetic_algorithm(X_num, X_img, y, fitness_fn, device=device, num_generations=100, population_size=30)
     ga_time = time.time() - start_time
     ga_fitness = fitness_fn(X_num[:, ga_selected_features[:-1].astype(bool)], X_img, y, ga_selected_features[-1].astype(bool))
 
     # PSO Feature Selection
     print("\n Evaluating PSO-selected features...")
     start_time = time.time()
-    pso_selected_features = particle_swarm_optimization(X_num, X_img, y, fitness_fn, device=device, num_iterations=5, num_particles=10)
+    pso_selected_features = particle_swarm_optimization(X_num, X_img, y, fitness_fn, device=device, num_iterations=100, num_particles=30)
     pso_time = time.time() - start_time
     pso_fitness = fitness_fn(X_num[:, pso_selected_features[:-1].astype(bool)], X_img, y, pso_selected_features[-1].astype(bool))
 
