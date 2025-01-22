@@ -112,6 +112,7 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=30, n
             # Evaluate fitness
             selected_features = particle[:-1].astype(bool)
             selected_images = particle[-1].astype(bool)
+            print(f"Testing particle {i} = {particle.astype(bool)}")
             fitness = fitness_fn(X_num[:, selected_features], X_img, y, selected_images)
 
             # Update personal best
