@@ -64,7 +64,7 @@ def main():
     # Summary
     print("\nPerformance Summary:")
     print(f"All Features Fitness Score: {baseline_fitness:.4f} | Runtime: {baseline_time:.2f} seconds")
-    #print("---------------------------------------------------------------------------")
+    print("---------------------------------------------------------------------------")
     #print(f"PCA Fitness Score: {pca_fitness:.4f} | Runtime: {pca_time:.2f} seconds")
     #print(f"PCA-selected features (binary mask): {pca_selected_features}")
     print("---------------------------------------------------------------------------")
