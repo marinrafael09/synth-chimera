@@ -50,14 +50,14 @@ def main():
     # GA Feature Selection
     print("\n Evaluating GA-selected features...")
     start_time = time.time()
-    ga_selected_features = genetic_algorithm(X_num, X_img, y, fitness_fn, device=device, num_generations=100, population_size=30)
+    ga_selected_features = genetic_algorithm(X_num, X_img, y, fitness_fn, device=device, num_generations=20, population_size=10)
     ga_time = time.time() - start_time
     ga_fitness = fitness_fn(X_num[:, ga_selected_features[:-1].astype(bool)], X_img, y, ga_selected_features[-1].astype(bool))
 
     # PSO Feature Selection
     print("\n Evaluating PSO-selected features...")
     start_time = time.time()
-    pso_selected_features = particle_swarm_optimization(X_num, X_img, y, fitness_fn, device=device, num_iterations=100, num_particles=30)
+    pso_selected_features = particle_swarm_optimization(X_num, X_img, y, fitness_fn, device=device, num_iterations=20, num_particles=10)
     pso_time = time.time() - start_time
     pso_fitness = fitness_fn(X_num[:, pso_selected_features[:-1].astype(bool)], X_img, y, pso_selected_features[-1].astype(bool))
 

@@ -65,7 +65,7 @@ class MultimodalSyntheticDataset(Dataset):
         norm_uniq_labels_colors = [int(np.interp(i, (0, unique_labels), (1, 240))) for i in range(unique_labels)]
         
         # Normalizing unique labels circle size between  25 and 54 
-        norm_uniq_labels_circles = [int(np.interp(i, (0, unique_labels), (25, 54))) for i in range(unique_labels)]
+        norm_uniq_labels_circles = [int(np.interp(i, (0, unique_labels), (self.image_size[1]//10, self.image_size[1]//2))) for i in range(unique_labels)]
 
         images = []
         for label in self.labels:
