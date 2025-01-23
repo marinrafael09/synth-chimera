@@ -130,8 +130,8 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=30, n
             r1, r2 = np.random.rand(num_features), np.random.rand(num_features)
             velocities[i] = (
                 w * velocities[i]
-                + c1 * r1 * (personal_best_positions[i] - particles[i])
-                + c2 * r2 * (global_best_position - particles[i])
+                + c1 * r1 * (personal_best_positions[i].astype(int) - particles[i].astype(int))
+                + c2 * r2 * (global_best_position.astype(int) - particles[i].astype(int))
             )
             particles[i] = (np.random.rand(num_features) < (1 / (1 + np.exp(-velocities[i])))).astype(int)
 
