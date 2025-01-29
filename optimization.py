@@ -115,9 +115,14 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
     personal_best_scores = np.array([fitness_fn(X_num[:, p[:-1].astype(bool)], X_img, y, p[-1].astype(bool)) for p in particles])
     personal_best_sum =  np.array([sum(p) for p in particles])
 
-    global_best_position = personal_best_positions[np.argmax(personal_best_scores)]
-    global_best_score = personal_best_scores.max()
-    global_best_sum = sum(global_best_position)
+    global_best_position = 0
+    global_best_score = 0
+    global_best_sum = 0
+    for i, personal_best_position in enumerate(personal_best_positions):
+        if (personal_best_scores[i] > global_best_score) or ((personal_best_scores[i] == global_best_score) and (sum(particles[i]) > global_best_sum)):
+            global_best_position = personal_best_position
+            global_best_score = personal_best_scores[i]
+            global_best_sum = sum(particles[i])
 
     for iteration in range(num_iterations):
         for i, particle in enumerate(particles):
@@ -147,7 +152,9 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
                 + c1 * r1 * (personal_best_positions[i].astype(int) - particles[i].astype(int))
                 + c2 * r2 * (global_best_position.astype(int) - particles[i].astype(int))
             )
-            particles[i] = (np.random.rand(num_features) < (1 / (1 + np.exp(-velocities[i])))).astype(int)
+            
+            #particles[i] = (np.random.rand(num_features) < (1 / (1 + np.exp(-velocities[i])))).astype(int)
+            particles[i] = (global_best_position.astype(int) < (1 / (1 + np.exp(-velocities[i])))).astype(int)
 
         print(f"Iteration {iteration + 1}: Best Fitness = {global_best_score}")
 
