@@ -49,11 +49,11 @@ def main():
     # GA Feature Selection
     print("\n Evaluating GA-selected features...")
     start_time = time.time()
-    ga_selected_features = genetic_algorithm(X_num, X_img, y, fitness_fn, device=device, num_generations=20, population_size=10)
+    ga_selected_features = genetic_algorithm(X_num, X_img, y, fitness_fn, device=device, num_generations=3, population_size=10)
     ga_time = time.time() - start_time
     ga_fitness = fitness_fn(X_num[:, ga_selected_features[:-1].astype(bool)], X_img, y, ga_selected_features[-1].astype(bool))
 
-    # PSO Feature Selection
+    # PSO Feature Selectionteste
     print("\n Evaluating PSO-selected features...")
     start_time = time.time()
     pso_selected_features = particle_swarm_optimization(X_num, X_img, y, fitness_fn, device=device, num_iterations=3, num_particles=10)
@@ -73,15 +73,15 @@ def main():
     print(f"PSO Fitness Score: {pso_fitness:.4f} | Runtime: {pso_time:.2f} seconds")
     print(f"PSO-selected features (binary mask): {pso_selected_features}")
 
-    filename = f"summary_{timestamp}.xlsx"
+    # filename = f"summary_{timestamp}.xlsx"
 
-    save_to_excel_with_performance_summary(
-        X_num, X_img, y,
-        baseline_fitness=baseline_fitness, baseline_time=baseline_time,
-        ga_fitness=ga_fitness, ga_time=ga_time, ga_selected_features=ga_selected_features,
-        pso_fitness=pso_fitness, pso_time=pso_time, pso_selected_features=pso_selected_features,
-        filename=filename
-    )
+    # save_to_excel_with_performance_summary(
+    #     X_num, X_img, y,
+    #     baseline_fitness=baseline_fitness, baseline_time=baseline_time,
+    #     ga_fitness=ga_fitness, ga_time=ga_time, ga_selected_features=ga_selected_features,
+    #     pso_fitness=pso_fitness, pso_time=pso_time, pso_selected_features=pso_selected_features,
+    #     filename=filename
+    # )
     
 if __name__ == "__main__":
     main()
