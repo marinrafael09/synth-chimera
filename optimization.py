@@ -74,6 +74,7 @@ def genetic_algorithm(X_num, X_img, y, fitness_fn, num_generations=50, populatio
             best_fitness_score = fitness
             best_sum = sum(population[i])
             best_individual = population[i]
+            print(f"Best fitness {best_fitness_score} - {best_individual}")
 
     return best_individual
 
