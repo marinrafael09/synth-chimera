@@ -104,8 +104,10 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
     # Initialize personal and global bests
     personal_best_positions = particles.copy()
     personal_best_scores = np.array([fitness_fn(X_num[:, p[:-1].astype(bool)], X_img, y, p[-1].astype(bool)) for p in particles])
+    
     global_best_position = personal_best_positions[np.argmax(personal_best_scores)]
     global_best_score = personal_best_scores.max()
+    global_best_sum = sum(global_best_position)
 
     for iteration in range(num_iterations):
         for i, particle in enumerate(particles):
@@ -121,9 +123,14 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
                 personal_best_scores[i] = fitness
 
             # Update global best
-            if fitness > global_best_score:
+            if (fitness > global_best_score):
                 global_best_position = particle
                 global_best_score = fitness
+                global_best_sum = sum(particle)
+            elif (fitness == global_best_score) and (sum(particle) > global_best_sum):
+                global_best_position = particle
+                global_best_score = fitness
+                global_best_sum = sum(particle)
 
         # Update velocities and positions
         for i in range(num_particles):
