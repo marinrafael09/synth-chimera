@@ -12,15 +12,15 @@ def main():
     print(f"Using device: {device}")
     
     # Generate dataset
-    n_samples = input("Number of Samples: ")
-    n_features = input("Number of Features (Even number - Except Image): ")
-    n_classes = input("Number of Classes: ")
+    n_samples: int = int(input("Number of Samples: "))
+    n_features: int = int(input("Number of Features (Even number - Except Image): "))
+    n_classes: int = int(input("Number of Classes: "))
 
-    num_pop = input("Number of Population (GA): ")
-    num_gen = input("Number of Generations (GA): ")
+    num_pop: int = int(input("Number of Population (GA): "))
+    num_gen: int = int(input("Number of Generations (GA): "))
     
-    num_part= input("Number of Particle (PSO): ")
-    num_iter= input("Number of Iteractions (PSO): ")
+    num_part: int = int(input("Number of Particle (PSO): "))
+    num_iter: int = int(input("Number of Iteractions (PSO): "))
 
     print('Generating multimodal dataset')
     X_num, X_img, y = generate_multimodal_dataset(num_samples=n_samples, num_features=n_features, image_size=(64,64), num_classes=n_classes)
