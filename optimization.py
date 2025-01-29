@@ -70,7 +70,7 @@ def genetic_algorithm(X_num, X_img, y, fitness_fn, num_generations=50, populatio
     return best_individual
 
 
-def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=30, num_iterations=50, w=0.5, c1=2, c2=2, device="cpu"):
+def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, num_iterations=50, w=0.5, c1=2, c2=2, device="cpu"):
     """
     Particle Swarm Optimization for feature selection on multimodal data.
 
