@@ -154,9 +154,10 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
             )
             
             #particles[i] = (np.random.rand(num_features) < (1 / (1 + np.exp(-velocities[i])))).astype(int)
-            sigmoid = 1 / (1 + np.exp(-velocities[i]))
-            particles[i] = (particles[i] ^ (sigmoid>0.5))
-
+            sigmoid = 1 / (1 + np.exp(-velocities[i]))            
+            rand_i = np.random.choice(len(particles[i]))
+            particles[i][rand_i] = np.bitwise_xor(particles[i][rand_i].astype(int), int(sigmoid[rand_i]) < 0.5)
+            
         print(f"Iteration {iteration + 1}: Best Fitness = {global_best_score}")
 
     return global_best_position
