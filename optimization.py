@@ -79,7 +79,7 @@ def genetic_algorithm(X_num, X_img, y, fitness_fn, num_generations=50, populatio
     return best_individual
 
 
-def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, num_iterations=50, w=0.5, c1=2, c2=2, device="cpu"):
+def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, num_iterations=50, w=0.5, c1=0.5, c2=1, device="cpu"):
     """
     Particle Swarm Optimization for feature selection on multimodal data.
 
@@ -155,7 +155,7 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
             
             #particles[i] = (np.random.rand(num_features) < (1 / (1 + np.exp(-velocities[i])))).astype(int)
             sigmoid = 1 / (1 + np.exp(-velocities[i]))
-            particles[i] = personal_best_positions[i].astype(int) < sigmoid
+            particles[i] = (particles[i] ^ (sigmoid>0.5))
 
         print(f"Iteration {iteration + 1}: Best Fitness = {global_best_score}")
 
