@@ -154,7 +154,8 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
             )
             
             #particles[i] = (np.random.rand(num_features) < (1 / (1 + np.exp(-velocities[i])))).astype(int)
-            particles[i] = (personal_best_positions[i].astype(int) < (1 / (1 + np.exp(-velocities[i])))).astype(int)
+            particles[i] = (personal_best_position[i] - (1 / (1 + np.exp(-velocities[i])))).astype(int)
+
 
         print(f"Iteration {iteration + 1}: Best Fitness = {global_best_score}")
 
