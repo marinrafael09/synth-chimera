@@ -66,7 +66,15 @@ def genetic_algorithm(X_num, X_img, y, fitness_fn, num_generations=50, populatio
         population = np.vstack((population, offspring))
 
     # Return the best individual from the final generation
-    best_individual = population[np.argmax(fitness_scores)]
+    # best_individual = population[np.argmax(fitness_scores)] old
+    best_fitness_score = 0
+    best_sum = 0
+    for i, fitness in enumerate(fitness_scores):
+        if (fitness > best_fitness_score) or ((fitness == best_fitness_score) and (sum(population[i])>best_sum)):
+            best_fitness_score = fitness
+            best_sum = sum(population[i])
+            best_individual = population[i]
+
     return best_individual
 
 
@@ -123,11 +131,7 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
                 personal_best_scores[i] = fitness
 
             # Update global best
-            if (fitness > global_best_score):
-                global_best_position = particle
-                global_best_score = fitness
-                global_best_sum = sum(particle)
-            elif (fitness == global_best_score) and (sum(particle) > global_best_sum):
+            if (fitness > global_best_score) or ((fitness == global_best_score) and (sum(particle) > global_best_sum)):
                 global_best_position = particle
                 global_best_score = fitness
                 global_best_sum = sum(particle)
