@@ -51,4 +51,6 @@ def evaluate_features(X_num, X_img, y, device, use_image=True, num_epochs=15, lr
         _, predicted = torch.max(outputs, 1)
         accuracy = (predicted == y).float().mean().item()
 
+    del model
+
     return accuracy
