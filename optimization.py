@@ -129,7 +129,7 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
             # Evaluate fitness
             selected_features = particle[:-1].astype(bool)
             selected_images = particle[-1].astype(bool)
-            print(f"Testing particle {i} = {particle.astype(bool)}")
+            # print(f"Testing particle {i} = {particle.astype(bool)}")
             fitness = fitness_fn(X_num[:, selected_features], X_img, y, selected_images)
 
             # Update personal best
@@ -153,11 +153,7 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
                 + c2 * r2 * (global_best_position.astype(int) - particles[i].astype(int))
             )
             
-            #particles[i] = (np.random.rand(num_features) < (1 / (1 + np.exp(-velocities[i])))).astype(int)
             sigmoid = 1 / (1 + np.exp(-velocities[i]))            
-            #rand_i = np.random.choice(len(particles[i]))
-            #particles[i][rand_i] = np.bitwise_xor(particles[i][rand_i].astype(int), int(sigmoid[rand_i]) > 0.5)
-            print(f"{i}  - {sigmoid}")            
             mutation_mask = (sigmoid > 0.5).astype(int)
             particles[i] = np.bitwise_xor(particles[i].astype(int), (mutation_mask))
             
