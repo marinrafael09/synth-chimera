@@ -43,7 +43,7 @@ def genetic_algorithm(X_num, X_img, y, fitness_fn, num_generations=50, populatio
             fitness_scores.append(fitness)
 
         fitness_scores = np.array(fitness_scores)
-        print(f"Generation {generation + 1}: Best Fitness = {fitness_scores.max()}")
+        print(f"Generation {generation + 1}")
 
         # Selection: Retain top individuals based on fitness
         sorted_indices = np.argsort(fitness_scores)[::-1]
@@ -74,7 +74,6 @@ def genetic_algorithm(X_num, X_img, y, fitness_fn, num_generations=50, populatio
             best_fitness_score = fitness
             best_sum = sum(population[i])
             best_individual = population[i]
-            print(f"Best fitness {best_fitness_score} - {best_individual}")
 
     return best_individual
 
@@ -157,7 +156,7 @@ def particle_swarm_optimization(X_num, X_img, y, fitness_fn, num_particles=20, n
             mutation_mask = (sigmoid > 0.5).astype(int)
             particles[i] = np.bitwise_xor(particles[i].astype(int), (mutation_mask))
             
-        print(f"Iteration {iteration + 1}: Best Fitness = {global_best_score}")
+        print(f"Iteration {iteration + 1}")
 
     return global_best_position
 
